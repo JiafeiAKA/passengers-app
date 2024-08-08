@@ -2,6 +2,7 @@
 import { ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { type Event } from '@/types';
+import { useMessageStore } from '@/stores/message';
 
 const props = defineProps<{ 
   event: Event
@@ -10,9 +11,14 @@ const props = defineProps<{
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { event } = toRefs(props);
 const router = useRouter();
+const store = useMessageStore()
 
 const editEvent = () => { 
-  router.push({ name: 'passenger-detail'});
+  store.updateMessage('the update is in progress ')
+  setTimeout(() => {
+    store.resetMessage()
+  }, 5000)
+  router.push({ name: 'passenger-list-view'})
 };
 </script>
 <template>
